@@ -21,6 +21,7 @@ CAPTURE_PASSWORD=${CAPTURE_PASSWORD:-myHep}
 RTCP_ENABLE=${RTCP_ENABLE:-false}
 RTCP_PORTRANGE=${RTCP_PORTRANGE:-5060-50000}
 LOG_LEVEL=${LOG_LEVEL:-3}
+PROMISC=${PROMISC:-false}
 
 # Deprecated? Remming out for now...
 # CLI_PASSWORD=${CLI_PASSWORD:-12345}
@@ -76,6 +77,10 @@ while true; do
       CAPTURE_PASSWORD=$2;
       echo "CAPTURE_PASSWORD set to: $CAPTURE_PASSWORD";
       shift 2 ;;
+    -p | --promisc )
+      PROMISC=$2;
+      echo "PROMISC set to: $PROMISC";
+      shift 2 ;;
     # -c | --clipassword )
     #   if [ "$2" == "" ]; then show_help; fi;
     #   CLI_PASSWORD=$2;
@@ -100,6 +105,7 @@ perl -p -i -e "s/debug\" value=\"./debug\" value=\"${LOG_LEVEL}/" $PATH_CAPTAGEN
 perl -p -i -e "s/eth0/$ETHERNET_DEV/" $PATH_CAPTAGENT_SOCKET_XML
 perl -p -i -e "s/RTCP Socket\" enable=\"false/RTCP Socket\" enable=\"${RTCP_ENABLE}/i" $PATH_CAPTAGENT_SOCKET_XML
 perl -p -i -e "s/5060-50000/${RTCP_PORTRANGE}/" $PATH_CAPTAGENT_SOCKET_XML
+perl -p -i -e "s/<param name=\"promisc\" value=\".*\"\/>/<param name=\"promisc\" value=\"${PROMISC}\"\/>/" $PATH_CAPTAGENT_SOCKET_XML
 
 perl -p -i -e "s/127.0.0.1/$CAPTURE_HOST/" $PATH_CAPTAGENT_TRANSPORT_XML
 perl -p -i -e "s/9061/$CAPTURE_PORT/" $PATH_CAPTAGENT_TRANSPORT_XML
