@@ -1,0 +1,5 @@
+captagent:
+  container_name: captagent
+  image: pimenas/docker-captagent:latest
+  restart: always
+  net: host

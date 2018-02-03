@@ -1,4 +1,4 @@
 build:
-	docker build --tag="qxip/captagent-docker:latest" ./ .
+	docker build --tag="pimenas/docker-captagent:latest" .
 
 .PHONY: build
