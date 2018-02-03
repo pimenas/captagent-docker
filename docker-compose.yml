@@ -1,5 +1,7 @@
 captagent:
   container_name: captagent
   image: pimenas/docker-captagent:latest
+    volumes:
+      - ./conf:/usr/local/captagent/etc/captagent
   restart: always
   net: host
